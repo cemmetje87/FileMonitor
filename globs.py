@@ -11,7 +11,7 @@ print("""
 ------------------------------------------------------
 |  File Monitoring Tool 0.0.1                        |
 |  CreativeMinds                                     |
-|  Developed by cemmetje87    & Pixdigit             |
+|  Developed by cemmetje87 & Pixdigit                |
 ------------------------------------------------------
 """)
 #load_config_query = input("Would you like to load config file?: {0}, {1}".format("(Y)es", "(N)o" ))
