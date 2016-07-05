@@ -1,0 +1,6 @@
+#Ignore ninja project files
+*.nja
+
+#Ignore "compiled" python
+**.pyo
+**.pyc
