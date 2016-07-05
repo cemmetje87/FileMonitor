@@ -1,16 +1,14 @@
 import smtplib
 import datetime
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEBase
-from email import encoders
-import fileMailandArchive
+import email
+import report_tool
+
 
 def mail_send():
     fromaddr = "from@gmail.com"
     toaddr = "to@gmail.com"
 
-    msg = MIMEMultipart()
+    msg = email.mime.multipart()
 
     msg['From'] = fromaddr
     msg['To'] = toaddr
@@ -18,13 +16,13 @@ def mail_send():
 
     body = "Log Report : " + datetime.datetime.now().strftime("%Y/%m/%d")
 
-    msg.attach(MIMEText(body, 'plain'))
-    filename = [fileMailandArchive.file_list]
+    msg.attach(email.mime.text(body, 'plain'))
+    filename = [report_tool.file_list]
     attachment = open(filename, "rb")
 
-    part = MIMEBase('application', 'octet-stream')
+    part = email.mime.multipart('application', 'octet-stream')
     part.set_payload((attachment).read())
-    encoders.encode_base64(part)
+    email.encoders.encode_base64(part)
     part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 
     msg.attach(part)
