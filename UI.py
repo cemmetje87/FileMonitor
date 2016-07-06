@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import string
 
 
 def init():
@@ -31,10 +32,10 @@ def welcome():
 def startup_menu():
     #Check for previous configuration
     #If not start configuration
-    if not os.path.exists("./.config.json"):
-        user_config()
+    if not os.path.exists("./.current_config.json"):
+        new_user_config()
     else:
-        answer = input("Previous configuration has been found.\n Would you like to use that one? (Y/n) ")
+        answer = input("Previous configuration has been found.\n Would you like to use that one? (Yes)")
         use_conf = check_yes_no(answer)
         if use_conf is None:
             #User either did not enter an answer
@@ -57,13 +58,48 @@ def startup_menu():
         print(use_conf)
 
 
-def user_config():
-    #TODO
+def new_user_config():
     #Let the user create a new config
-    pass
+
+    #get valid name
+    invalid_name = True
+    while invalid_name:
+        invalid_chars = ["\\", "/", ":", "*", "?", "\"", "<", ">", "|"]
+        name = input("Name of the configuration: ?")
+        all_chars_valid = True
+        for letter in name:
+            all_chars_valid = all_chars_valid and letter not in invalid_chars
+        invalid_name = not all_chars_valid
+        if invalid_name:
+            print("That name cannot be used since it contains special characters.\n Try not to use / \\ : * ? \" < > or |")
+
+    #get root search directory
+    not_correct_answer = True
+    while not_correct_answer:
+        root_search_directory = input("Root search directory: ?")
+        if os.path.exists(root_search_directory):
+            not_correct_answer = False
+        else:
+            print("The directory you entered does not exists.\n Make sure you made no typos and that the directory exists.")
+
+    #bla blablablal
+    monitor_mode_menu = True
+    monitor_mode = ""
+    while monitor_mode_menu:
+        answer_monitor_mode = input("Please define monitor mode for selected files/folder: (M)odify, (D)eletion, M(O)ve")
+        #check for selection in answer
+        for option in ["M", "D", "O"]:
+            if option in answer_monitor_mode:
+                monitor_mode += option
+        #No valid option chosen
+        if monitor_mode == "":
+            print("Your answer must at least contain either M, D or O")
+        else:
+            monitor_mode_menu = False
 
 
 def load_conf(config_file):
     #TODO
     #Load a configuration from file
     config_file.close()
+
